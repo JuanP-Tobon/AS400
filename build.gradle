@@ -1,0 +1,41 @@
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.34") }
+}
+
+apply plugin: "java"
+apply plugin: 'net.serenity-bdd.aggregator'
+
+dependencies {
+    implementation "net.serenity-bdd:serenity-core:3.5.0"
+    implementation "net.serenity-bdd:serenity-junit:3.5.0"
+    implementation "net.serenity-bdd:serenity-screenplay:3.5.0"
+
+    implementation "net.serenity-bdd:serenity-cucumber:3.5.0"
+    implementation "io.cucumber:cucumber-core:7.11.0"
+    implementation "io.cucumber:cucumber-junit:7.8.1"
+    implementation "io.cucumber:cucumber-java:7.8.1"
+    implementation 'junit:junit:4.12'
+    implementation "org.assertj:assertj-core:1.7.0"
+    implementation 'co.com.devco.automation:automationDevcoLibrary:1.3.1'
+    implementation("co.com.devco:serenity-screenplay-as400:1.0.2")
+    implementation 'net.sf.jt400:jt400:9.7'
+    implementation 'org.mongodb:mongo-java-driver:3.12.11'
+    implementation 'org.atmosphere.client:javascript:3.0.6'
+}
+
+test {
+    systemProperties System.getProperties()
+}
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
